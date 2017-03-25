@@ -2,84 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use App\Image;
 use Illuminate\Http\Request;
+use App\Http\Libraries\AjaxResponse;
+use App\Post;
+use App\Image;
 
-class ImageController extends Controller
+class Imagecontroller extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
+    //
+    public function store(Request $request){
+//        dd($request);
+        $role = [
+            'filename' =>'required|max:100',
+        ];
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+        $validator = \Validator::make($request->all(), $role);
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        if($validator->fails()){
+            return ('alert("Please upload file properly.")');
+        } // 오류 발생 시 에러 메세지 출력
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Image  $image
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Image $image)
-    {
-        //
-    }
+        $imagePath = '/assets/images/uploads';
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Image  $image
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Image $image)
-    {
-        //
-    }
+        $image = new Image();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Image  $image
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Image $image)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Image  $image
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Image $image)
-    {
-        //
+
     }
 }

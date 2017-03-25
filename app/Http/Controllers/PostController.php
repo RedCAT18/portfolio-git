@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Post;
 use Illuminate\Http\Request;
+use App\Http\Libraries\AjaxResponse;
+use App\Post;
+use App\Tag;
+use App\Category;
+use App\Reply;
 
 class PostController extends Controller
 {
@@ -14,72 +18,70 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::all();
+        $categories = Category::all(); //for modal
+//        dd($categories);
+        $rsp = new AjaxResponse();
+
+        $data['html'] = \View::make('admin.post')->with('posts',$posts)->with('categories',$categories)->render();
+
+        $rsp-> success = 1; //property of AjaxResponse()
+        $rsp-> data = $data;
+
+        return $rsp->toArray();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function create() {
+
+        $categories = Category::all();
+        $rsp = new AjaxResponse();
+
+        $data['html'] = \View::make('admin.create')->with('categories',$categories)->render();
+
+        $rsp->success = 1;
+        $rsp->data = $data;
+
+        return $rsp->toArray();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request) {
+        dd($request);
+        if($request->id){
+            $post = Post::findOrFail($request->id);
+        } else {
+            $post = new Post();
+        }
+
+        $post->title = $request->title;
+        $post->description = $request->description;
+        $post->category_id = $request->category;
+        $post->save();
+
+
+        $categories = Category::all();
+        $post = Post::all();
+        $rsp = new AjaxResponse();
+
+        $data['html'] = \View::make('admin.post')->with('posts',$posts)->with('categories',$categories)->render();
+
+        $rsp-> success = 1;
+        $rsp-> data = $data;
+
+        return $rsp->toArray();
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Post  $post
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Post $post)
-    {
-        //
-    }
+    public function edit($id) {
+        $data['post'] = Post::findOrFail($id);
+        $categories = Category::all();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Post  $post
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Post $post)
-    {
-        //
-    }
+        $rsp = new AjaxResponse();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Post  $post
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Post $post)
-    {
-        //
-    }
+        $data['html'] = \View::make('admin.create')->with('categories',$categories)->render();
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Post  $post
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Post $post)
-    {
-        //
+        $rsp->success = 1;
+        $rsp->data = $data;
+//        dd($rsp);
+        return $rsp->toArray();
+
     }
 }

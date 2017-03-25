@@ -1,9 +1,405 @@
 
 // Fonts
 @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+@import url('https://fonts.googleapis.com/css?family=Amatic+SC:400,700|Limelight|Quicksand:300,400');
 
 // Variables
 @import "variables";
 
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+//mixin
+@mixin set-margin ($px1, $px2) {
+  margin-top: $px1;
+  margin-bottom: $px1;
+  margin-left: $px2;
+  margin-right: $px2;
+}
+
+@mixin set-margin-v ($px) {
+  margin-top: $px;
+  margin-bottom: $px;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+@mixin set-margin-h ($px) {
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: $px;
+  margin-right: $px;
+}
+
+@mixin set-padding ($px1, $px2) {
+  padding-top: $px1;
+  padding-bottom: $px1;
+  padding-left: $px2;
+  padding-right: $px2;
+}
+
+
+//index
+
+a { text-decoration: none; }
+
+.header_menu ul li a { cursor: pointer; }
+
+.site_title h1 {
+  color: #be3586;
+  font-family: $lime;
+  padding-left: 40px;
+}
+
+.header_menu {
+  margin-top: 10px;
+  font-family: $sand;
+  text-align: right;
+  a {
+    color: $purple-grey;
+    text-decoration: none;
+  }
+  a:hover {
+    color: $dark-violet-grey;
+  }
+  ul {
+    list-style-type: none;
+    li {
+      display: inline;
+      padding-right: 40px;
+    }
+  }
+}
+
+.third_sect {
+  margin-top: 100px;
+}
+
+.first_sect {
+  @extend .third_sect;
+  background-image: url('../assets/images/bg1.png');
+  background-repeat: no-repeat;
+}
+
+.center_text {
+  p {
+    font-family: $amatic;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 3.2em;
+    @include set-margin-v(25px);
+  }
+}
+
+.second_sect {
+  @extend .third_sect;
+  background-color: $light-grey;
+}
+
+
+.mePhoto img {
+  margin-bottom: 10px;
+}
+
+.aboutMe {
+  text-align: right;
+  hr {
+    margin-left: 100px;
+    border-top: $pgborder;
+  }
+  p {
+    font-family: $amatic;
+    font-size: 2em;
+  }
+}
+
+.big_text {
+  font-family: $amatic;
+  font-size: 3em;
+}
+
+.heavy_text {
+  font-family: $amatic;
+  font-size: 2em;
+  font-weight: bold;
+  color: $violet-grey;
+}
+
+.work_title h1 {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.indent {
+  font-family: $amatic;
+  text-indent: 50px;
+  font-size: 1.5em;
+}
+
+.career {
+  margin-bottom: 30px;
+  hr {
+    border-top: $pgborder;
+  }
+}
+
+.footer {
+  margin-top: 50px;
+  color: $violet;
+  font-family: $sand;
+}
+
+
+.contact {
+  margin-bottom: 50px;
+  padding: 0;
+}
+
+.sns {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 20px;
+  li {
+    display: inline;
+    margin-right: 20px;
+  }
+}
+
+.cv_icon {
+  color: $violet;
+  font-size: 1.5em;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+.copyright { text-align: center; }
+
+//==work==
+
+.postbody {
+  background-color: $mint;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 40px;
+  border: $pgborder;
+}
+
+.tags {
+  border-radius: 10px;
+  background-color: $mint;
+  @include set-margin-v(10px);
+  color: $dark-violet-grey;
+  @include set-padding(10px, 40px);
+  border: $pgborder;
+}
+
+.tags_detail {
+  @include set-padding(10px, 40px);
+}
+
+.post_image img{
+  max-width: 800px;
+  display: block;
+  @include set-margin(20px, auto);
+  box-shadow: 2px 2px 5px #bcb3ca;
+}
+
+.post_title h2{
+  color: $dark-violet-grey;
+  font-weight: 700;
+}
+
+.post_category {
+  padding-top: 40px;
+  font-size: 9pt;
+}
+
+.post_description {
+  margin-bottom: 50px;
+  margin-top: 20px;
+}
+
+.post_date {
+  margin-bottom: 20px;
+}
+
+.post_tag {
+  border: $pgborder;
+  border-radius: 5px;
+  @include set-padding(10px, 0);
+  margin-bottom: 40px;
+  span {
+    @include set-margin(5px, 10px);
+    background-color: $blue-grey;
+    border-radius: 3px;
+  }
+}
+
+.tags span {
+  @expend .post_tag span;
+}
+
+.post_btn {
+  color: $dark-grey;
+  @include set-padding(5px, 10px);
+  background-color: $blue-grey;
+  border-radius: 5px;
+  border:  $pgborder;
+  margin-right: 10px;
+}
+
+.text_color {
+  color: $mid-dark-grey;
+}
+
+#scrollup {
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+}
+
+.blog_plate {
+  @extend .third_sect;
+}
+
+.blog_body {
+  border: $bgborder;
+  border-radius: 10px;
+  hr {
+    border-top: 2px solid #bcb3ca;
+    @include set-margin(50px, 0);
+  }
+}
+
+.blog_post_title {
+  background-color: $mint;
+  border-radius: 10px;
+  color: $dark-violet-grey;
+  font-weight: bold;
+  text-transform: capitalize;
+  @include set-margin-v(20px);
+  @include set-padding(5px, 5px);
+  text-indent: 20px;
+}
+
+.blog_post_date {
+  text-align: right;
+  padding-right: 40px;
+  margin-bottom: 20px;
+}
+
+.blog_post_body {
+  border-top : $bgborder;
+  border-bottom : $bgborder;
+  @include set-padding(20px, 20px);
+  text-indent: 10px;
+  margin-bottom: 50px;
+  img {
+    display: block;
+    @include set-margin(20px, auto);
+  }
+}
+
+.reply_title {
+  font-weight: bold;
+  text-indent: 30px;
+  margin-bottom: 20px;
+}
+
+.reply_write_name input, .reply_write_comment input, .reply_write_password input {
+  width: 95%;
+}
+
+.align_center {
+  display: block;
+  margin: auto;
+}
+
+.post_button {
+  margin-top: 20px;
+}
+
+.blog_btn {
+  @include set-padding(2px, 5px);
+  background-color: $blue-grey;
+  color: $dark-violet-grey;
+  border: $pgborder;
+}
+
+.editor {
+  margin-top: 100px;
+  h2 {
+    @include set-margin-v(20px);
+  }
+}
+
+.editor_part {
+  @include set-margin-v(20px);
+}
+
+.contactways {
+  color: $magenta;
+  background-color: $light-grey;
+  padding-bottom: 40px;
+  margin-bottom: 40px;
+}
+
+.contTitle {
+  font-family: $amatic;
+  font-weight: bold;
+}
+
+.contact_title h1 {
+  @extend .contTitle;
+}
+
+.contactways h3 {
+  @extend .contTitle;
+  margin-bottom: 30px;
+}
+
+.contactme {
+  margin-top: 100px;
+}
+
+.work_admin {
+  margin-top: 50px;
+  background-color: #f6f6f6;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.blog_admin {
+  @extend .work_admin;
+}
+
+.profile {
+  @extend .work_admin;
+  input {
+    @include set-margin-v(5px);
+  }
+}
+
+.work_through {
+  tr {
+    td {
+      cursor: pointer;
+    }
+  }
+}
+
+.collapse {
+  ul {
+    li {
+      cursor: pointer;
+    }
+  }
+}
+
+.category_edit, .category_delete, .add_category {
+  cursor: pointer;
+}
+
+.print_cv {
+    @include set-margin-v(50px);
+}

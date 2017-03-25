@@ -44,7 +44,21 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        return parent::render($request, $exception);
+          if(app()->environment('production')){
+              $statusCode = 400;
+              $title = 'Sorry. :(';
+              $description = 'There is error.';
+              if($exception instanceof ModelNotFoundException or $exception instanceof NotFoundHttpException){ //exception의 프로토타입 속성이 ModelNotFoundException이거나 NouFoundHttpException일 경우
+                  $status = 404;
+                  $description = $exception->getMessage()? : 'Page Not Found.';
+              }
+
+              return response(view('errors.notice', [
+                  'title' => $title,
+                  'description' => $description,
+              ]), $statusCode);
+          }
+        return parent::render($request, $exception); // 예외상황 시 에러코드 반환
     }
 
     /**

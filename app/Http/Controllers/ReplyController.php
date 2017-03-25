@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Reply;
 use Illuminate\Http\Request;
 
 class ReplyController extends Controller
@@ -41,10 +40,10 @@ class ReplyController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Reply  $reply
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Reply $reply)
+    public function show($id)
     {
         //
     }
@@ -52,10 +51,10 @@ class ReplyController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Reply  $reply
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Reply $reply)
+    public function edit($id)
     {
         //
     }
@@ -64,10 +63,10 @@ class ReplyController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Reply  $reply
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Reply $reply)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -75,10 +74,10 @@ class ReplyController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Reply  $reply
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Reply $reply)
+    public function destroy($id)
     {
         //
     }

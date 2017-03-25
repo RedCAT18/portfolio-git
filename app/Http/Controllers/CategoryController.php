@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Category;
 use Illuminate\Http\Request;
+use App\Http\Libraries\AjaxResponse;
+use App\Category;
+use App\Post;
 
 class CategoryController extends Controller
 {
@@ -15,6 +17,9 @@ class CategoryController extends Controller
     public function index()
     {
         //
+        $data['categories'] = Category::all();
+
+        return $data['categories']->toArray();
     }
 
     /**
@@ -22,10 +27,7 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -35,51 +37,61 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $role = [
+            'name' => 'required|unique:categories|max:20',
+        ];
 
+        $validator = \Validator::make($request->all(), $role); //Controller에서 상속
+
+        if ($validator->fails()) {
+            $data['categories'] = Category::all();
+
+            return $data['categories']->toArray();
+        }
+
+        if($request->id){
+            $category = Category::findOrFail($request->id);
+        } else {
+            $category = new Category();
+        }
+//        dd($category);
+        $category->name = $request->name;
+        $category->save();
+
+        $posts = Post::all();
+        $categories = Category::all();
+        $rsp = new AjaxResponse();
+
+        $data['html'] = \View::make('admin.post')->with('posts',$posts)->with('categories',$categories)->render(); //make : memory에 올린다.
+
+//        dd($profile);
+        $rsp-> success = 1; //property of AjaxResponse()
+        $rsp-> data = $data;
+
+        return $rsp->toArray();
+    }
     /**
      * Display the specified resource.
      *
-     * @param  \App\Category  $category
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Category $category)
+    public function destroy($id)
     {
-        //
-    }
+        $category = Category::findOrFail($id);
+        $category->delete();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Category $category)
-    {
-        //
-    }
+        $posts = Post::all();
+        $categories = Category::all();
+        $rsp = new AjaxResponse();
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Category $category)
-    {
-        //
+        $data['html'] = \View::make('admin.post')->with('posts',$posts)->with('categories',$categories)->render(); //make : memory에 올린다.
+
+//        dd($profile);
+        $rsp-> success = 1; //property of AjaxResponse()
+        $rsp-> data = $data;
+
+        return $rsp->toArray();
     }
 }
